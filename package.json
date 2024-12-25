@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.5.2",
     "@reduxjs/toolkit": "^2.5.0",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
@@ -42,7 +43,7 @@
     "@types/prop-types": "^15.7.14",
     "@types/react-transition-group": "^4.4.12",
     "@types/underscore": "^1.13.0",
-    "antd": "^5.22.5",
+    "antd": "^5.22.6",
     "classnames": "^2.5.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.0",
