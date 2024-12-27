@@ -1,7 +1,41 @@
 import React, { memo } from "react";
+import { useSelector } from "react-redux";
 
 const IconProfileAvatar = memo(() => {
-  return (
+  const { userInfo } = useSelector((state: any) => ({
+    userInfo: state.home.userInfo, // 根据实际 Redux 状态修改路径
+  }));
+
+  // 随机生成背景颜色
+  const getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  return userInfo && userInfo.username ? (
+    // 显示用户名首字母
+    <div
+      style={{
+        width: "32px",
+        height: "32px",
+        borderRadius: "50%",
+        backgroundColor: getRandomColor(),
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#fff",
+        fontWeight: "bold",
+        fontSize: "16px",
+      }}
+    >
+      {userInfo.username.charAt(0).toUpperCase()}
+    </div>
+  ) : (
+    // 显示默认 SVG 头像
     <div style={{ width: "32px", height: "32px", color: "#717171" }}>
       <svg
         viewBox="0 0 32 32"

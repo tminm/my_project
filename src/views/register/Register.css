@@ -11,7 +11,7 @@
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  width: 430px;
   text-align: center;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .form-input {
-  width: 100%;
+  width: 88%;
   padding: 10px;
   border: 1px solid #d9d9d9;
   border-radius: 4px;

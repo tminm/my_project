@@ -1,13 +1,21 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, use } from "react";
 import { RightWrapper } from "./style";
 import IconGlobal from "../../../../assets/svg/icon-global";
 import IconProfileMenu from "../../../../assets/svg/icon-profile-menu";
 import IconProfileAvatar from "../../../../assets/svg/icon-profile-avatar";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeLoginInfoAction } from "store/modules/entire/createActions";
+import { changeUserInfoAction } from "store/modules/home";
 
 const HeaderRight = memo(() => {
   const [showPanel, setShowPanel] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { userInfo } = useSelector((state: any) => ({
+    userInfo: state.home.userInfo, // 根据实际 Redux 状态修改路径
+  }));
   // 副作用代码
   useEffect(() => {
     function windowHandleClick() {
@@ -28,16 +36,23 @@ const HeaderRight = memo(() => {
   }
 
   function handleLogin() {
-    //编程式导航跳转
     navigate("/login");
+    // dispatch(changeUserInfoAction({ username: "chen", password: "123456" }));
+  }
+
+  function handleunLogin() {
+    console.log("退出登录");
+    dispatch(changeUserInfoAction(null));
   }
   return (
     <RightWrapper>
       <div className="btns">
-        <span className="btn" onClick={handleLogin}>
-          登录
-        </span>
-        <span className="btn">注册</span>
+        {!userInfo.username && (
+          <span className="btn" onClick={handleLogin}>
+            登录
+          </span>
+        )}
+        {!userInfo.username && <span className="btn">注册</span>}
         <span>
           <IconGlobal></IconGlobal>
         </span>
@@ -49,8 +64,25 @@ const HeaderRight = memo(() => {
         {showPanel && (
           <div className="panel">
             <div className="top">
-              <div className="item register">注册</div>
-              <div className="item logo">登录</div>
+              {
+                //判断用户是否登录
+                userInfo.username ? (
+                  <>
+                    <div
+                      className="item"
+                      onClick={() => console.log("点击了个人中心")}
+                    >
+                      个人中心
+                    </div>
+                    <button onClick={handleunLogin}>退出登录</button>
+                  </>
+                ) : (
+                  <>
+                    <div className="item">登录</div>
+                    <div className="item">注册</div>
+                  </>
+                )
+              }
             </div>
             <div className="bottom">
               <div className="item">出租房源</div>

@@ -74,6 +74,14 @@ export const changeIsLoadingAction = (
   isLoading,
 });
 
+export const changeLoginInfoAction = () => ({
+  type: actionTypes.CHANGE_LOGIN_INFO,
+  userInfo: {
+    userName: "admin",
+    passWord: "123456",
+  },
+});
+
 // Fetch room list action creator using redux-thunk
 export const fetchRoomListAction = () => {
   return async (dispatch: Dispatch<EntireActionTypes>, getState: () => any) => {
@@ -95,5 +103,11 @@ export const fetchRoomListAction = () => {
 
     dispatch(changeRoomListAction(roomList));
     dispatch(changeTotalCountAction(totalCount));
+  };
+};
+
+export const fetchLoginAction = () => {
+  return async (dispatch: Dispatch<EntireActionTypes>) => {
+    dispatch(changeIsLoadingAction(true));
   };
 };

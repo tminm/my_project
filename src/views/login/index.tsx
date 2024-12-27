@@ -2,13 +2,20 @@ import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { changeUserInfoAction } from "store/modules/home";
+import { useDispatch } from "react-redux";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onLogin = (event: React.FormEvent) => {
     event.preventDefault();
     console.log("登录表单提交");
+    // 在这里执行登录逻辑
+    //模拟登录派发action
+    dispatch(changeUserInfoAction({ username: "陈俊杰", password: "123456" }));
+    navigate("/home");
   };
 
   const handleRegisterRedirect = () => {
@@ -45,7 +52,7 @@ const Login: React.FC = () => {
             </label>
             <a href="/">忘记密码?</a>
           </div>
-          <button type="submit" className="form-button">
+          <button type="submit" className="form-button" onClick={onLogin}>
             登录
           </button>
         </form>

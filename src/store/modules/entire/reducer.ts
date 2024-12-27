@@ -17,6 +17,8 @@ function reducer(state = initialState, action: any) {
       return { ...state, totalCount: action.totalCount };
     case actionTypes.CHANGE_IS_LOADING:
       return { ...state, isLoading: action.isLoading };
+    case actionTypes.CHANGE_LOGIN_INFO:
+      return { ...state, userInfo: action.userInfo };
     default:
       return state;
   }

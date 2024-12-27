@@ -25,15 +25,6 @@ const Register: React.FC = () => {
           <div className="form-item">
             <input
               className="form-input"
-              type="email"
-              name="email"
-              placeholder="邮箱"
-              required
-            />
-          </div>
-          <div className="form-item">
-            <input
-              className="form-input"
               type="password"
               name="password"
               placeholder="密码"
