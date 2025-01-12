@@ -1,9 +1,9 @@
-import React from "react";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { changeUserInfoAction } from "store/modules/home";
 import { useDispatch } from "react-redux";
+import { changeHeaderConfigAction } from "store/modules/main";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -13,10 +13,14 @@ const Login: React.FC = () => {
     event.preventDefault();
     console.log("登录表单提交");
     // 在这里执行登录逻辑
-    //模拟登录派发action
     dispatch(changeUserInfoAction({ username: "陈俊杰", password: "123456" }));
     navigate("/home");
   };
+
+  useEffect(() => {
+    // 发送动作，确保使用正确的类型
+    dispatch(changeHeaderConfigAction({ isFixed: true, topAlpha: false }));
+  }, []);
 
   const handleRegisterRedirect = () => {
     navigate("/register");
@@ -52,7 +56,12 @@ const Login: React.FC = () => {
             </label>
             <a href="/">忘记密码?</a>
           </div>
-          <button type="submit" className="form-button" onClick={onLogin}>
+          <button
+            style={{ backgroundColor: "#e51d58" }}
+            type="submit"
+            className="form-button"
+            onClick={onLogin}
+          >
             登录
           </button>
         </form>

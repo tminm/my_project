@@ -19,6 +19,10 @@ const Login: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
 const Register: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
   () => import("../views/register")
 );
+
+const Confirm: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
+  () => import("../views/Confirm/confirm")
+);
 // 定义路由配置项的类型
 interface RouteConfig {
   path: string; // 路由路径
@@ -54,6 +58,10 @@ const routes: RouteConfig[] = [
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/confirm",
+    element: <Confirm />,
   },
 ];
 

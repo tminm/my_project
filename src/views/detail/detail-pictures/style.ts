@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 export const PicturesWrapper = styled.div`
   position: relative;
+  padding: 0 105px;
   > .pictures {
     display: flex;
-    height: 600px;
+    height: 400px;
+    margin-top: 20px;
     background-color: #000;
 
     .cover {

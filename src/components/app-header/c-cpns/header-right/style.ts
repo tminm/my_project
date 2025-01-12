@@ -35,6 +35,7 @@ export const RightWrapper = styled.div`
     border: 1px solid #dddddd;
     border-radius: 25px;
     background-color: #fff;
+    cursor: pointer;
 
     //阴影动画
     //方法一：
@@ -57,7 +58,10 @@ export const RightWrapper = styled.div`
       margin-right: 15px;
 
       .top {
+        display: flex;
+        justify-content: space-around;
         border-bottom: 1px solid #dddddd;
+        cursor: pointer;
       }
 
       .top,

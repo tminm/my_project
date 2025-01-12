@@ -13,10 +13,15 @@ const DetailPictures = memo(() => {
   const [showBrowser, setShowBrowser] = useState(false);
 
   // 使用 useSelector 获取 detailInfo，并为它指定类型
-  const { detailInfo } = useSelector(
-    (state: { detail: { detailInfo: IDetailInfo } }) => ({
+  const { detailInfo, goodPriceInfo } = useSelector(
+    (state: { detail: { detailInfo: any }; home: { goodPriceInfo: any } }) => ({
       detailInfo: state.detail.detailInfo,
+      goodPriceInfo: state.home.goodPriceInfo,
     })
+  );
+
+  const pictureList = (goodPriceInfo.list as Array<any>).map(
+    (item) => item.picture_url
   );
 
   return (
@@ -24,23 +29,43 @@ const DetailPictures = memo(() => {
       <div className="pictures">
         <div className="left">
           <div className="item" onClick={() => setShowBrowser(true)}>
+            {detailInfo?.picture_urls?.[0] ? (
+              <img src={detailInfo?.picture_urls?.[0]} alt="" />
+            ) : (
+              <img src={detailInfo.picture_url} alt="" />
+            )}
             <img src={detailInfo?.picture_urls?.[0]} alt="" />
             <div className="cover"></div>
           </div>
         </div>
         <div className="right">
-          {detailInfo?.picture_urls?.slice(1, 5).map((item, index) => {
-            return (
-              <div
-                className="item"
-                key={index}
-                onClick={() => setShowBrowser(true)}
-              >
-                <img src={item} alt="" />
-                <div className="cover"></div>
-              </div>
-            );
-          })}
+          {detailInfo?.picture_urls
+            ? detailInfo?.picture_urls
+                ?.slice(1, 5)
+                .map((item: string, index: number) => {
+                  return (
+                    <div
+                      className="item"
+                      key={index}
+                      onClick={() => setShowBrowser(true)}
+                    >
+                      <img src={item} alt="" />
+                      <div className="cover"></div>
+                    </div>
+                  );
+                })
+            : pictureList.slice(1, 5).map((item: string, index: number) => {
+                return (
+                  <div
+                    className="item"
+                    key={index}
+                    onClick={() => setShowBrowser(true)}
+                  >
+                    <img src={item} alt="" />
+                    <div className="cover"></div>
+                  </div>
+                );
+              })}
         </div>
       </div>
       <div className="show-btn" onClick={() => setShowBrowser(true)}>

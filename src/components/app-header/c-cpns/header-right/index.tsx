@@ -18,13 +18,15 @@ const HeaderRight = memo(() => {
   }));
   // 副作用代码
   useEffect(() => {
-    function windowHandleClick() {
-      setShowPanel(false);
+    function windowHandleClick(e: MouseEvent) {
+      const target = e.target as HTMLElement;
+      if (!target.closest(".panel") && !target.closest(".profile")) {
+        setShowPanel(false);
+      }
     }
 
     window.addEventListener("click", windowHandleClick, true);
 
-    //取消监听
     return () => {
       window.removeEventListener("click", windowHandleClick, true);
     };
@@ -40,9 +42,10 @@ const HeaderRight = memo(() => {
     // dispatch(changeUserInfoAction({ username: "chen", password: "123456" }));
   }
 
-  function handleunLogin() {
+  function handleunLogin(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    e.stopPropagation();
     console.log("退出登录");
-    dispatch(changeUserInfoAction(null));
+    dispatch(changeUserInfoAction({ username: "", password: "" }));
   }
   return (
     <RightWrapper>
@@ -74,7 +77,7 @@ const HeaderRight = memo(() => {
                     >
                       个人中心
                     </div>
-                    <button onClick={handleunLogin}>退出登录</button>
+                    <div onClick={handleunLogin}>退出登录</div>
                   </>
                 ) : (
                   <>
