@@ -77,7 +77,7 @@ export const changeIsLoadingAction = (
 export const changeLoginInfoAction = () => ({
   type: actionTypes.CHANGE_LOGIN_INFO,
   userInfo: {
-    userName: "admin",
+    userName: "陈",
     passWord: "123456",
   },
 });

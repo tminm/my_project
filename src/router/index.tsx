@@ -23,6 +23,10 @@ const Register: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
 const Confirm: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
   () => import("../views/Confirm/confirm")
 );
+
+const UserCenter: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
+  () => import("../views/userCenter/userCenter") // 假设你已经定义了个人中心组件
+);
 // 定义路由配置项的类型
 interface RouteConfig {
   path: string; // 路由路径
@@ -62,6 +66,10 @@ const routes: RouteConfig[] = [
   {
     path: "/confirm",
     element: <Confirm />,
+  },
+  {
+    path: "/userCenter",
+    element: <UserCenter />,
   },
 ];
 

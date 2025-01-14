@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLoginInfoAction } from "store/modules/entire/createActions";
 import { changeUserInfoAction } from "store/modules/home";
+import { changeHeaderConfigAction } from "store/modules/main";
 
 const HeaderRight = memo(() => {
   const [showPanel, setShowPanel] = useState(false);
@@ -42,6 +43,12 @@ const HeaderRight = memo(() => {
     // dispatch(changeUserInfoAction({ username: "chen", password: "123456" }));
   }
 
+  function handleUserCenter() {
+    dispatch(changeHeaderConfigAction({ isFixed: false, topAlpha: false }));
+    dispatch(changeLoginInfoAction());
+    navigate("/userCenter");
+  }
+
   function handleunLogin(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.stopPropagation();
     console.log("退出登录");
@@ -71,10 +78,7 @@ const HeaderRight = memo(() => {
                 //判断用户是否登录
                 userInfo.username ? (
                   <>
-                    <div
-                      className="item"
-                      onClick={() => console.log("点击了个人中心")}
-                    >
+                    <div className="item" onClick={handleUserCenter}>
                       个人中心
                     </div>
                     <div onClick={handleunLogin}>退出登录</div>
