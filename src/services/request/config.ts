@@ -1,3 +1,3 @@
-export const BASE_URL = "http://codercba.com:1888/airbnb/api";
+export const BASE_URL = "http://localhost:4000";
 
 export const TIMEOUT = 10000;

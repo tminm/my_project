@@ -14,7 +14,7 @@ interface IProps {
   infoData: {
     title: string;
     subtitle: string;
-    list: LongForItemData[];
+    list: any[];
   };
 }
 
@@ -23,12 +23,12 @@ const HomeLongfor: React.FC<IProps> = memo(function HomeLongfor(props) {
   return (
     <LongForWrapper>
       <SectionHeader
-        title={infoData.title}
-        subtitle={infoData.subtitle}
+        title={infoData.list[0].title}
+        subtitle={infoData.list[0].subtitle}
       ></SectionHeader>
       <div className="longfor-list">
         <ScrollView>
-          {infoData.list.map((item: LongForItemData) => {
+          {infoData.list[0].list.map((item: LongForItemData) => {
             return <LongForItem itemData={item} key={item.city}></LongForItem>;
           })}
         </ScrollView>

@@ -22,7 +22,9 @@ interface InfoData {
 }
 
 interface HomeSectionPlusProps {
-  infoData: InfoData;
+  infoData: {
+    data: InfoData[];
+  };
 }
 
 const HomeSectionPlus: React.FC<HomeSectionPlusProps> = memo((props) => {
@@ -30,12 +32,12 @@ const HomeSectionPlus: React.FC<HomeSectionPlusProps> = memo((props) => {
   return (
     <HomePlusWrapper>
       <SectionHeader
-        title={infoData.title}
-        subtitle={infoData.subtitle}
+        title={infoData.data[0].title}
+        subtitle={infoData.data[0].subtitle}
       ></SectionHeader>
       <div className="room-list">
         <ScrollView>
-          {infoData.list.map((item) => {
+          {infoData.data[0].list.map((item) => {
             return (
               <RoomItem
                 itemData={item}

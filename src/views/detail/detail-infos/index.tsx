@@ -53,7 +53,7 @@ const DetailInfos = memo(() => {
           {/* <h3>{detailInfo.name.replace("2.", "")}</h3> */}
           <h3>{detailInfo.name}</h3>
           <p style={{ paddingLeft: "105px" }}>
-            {detailInfo.verify_info.messages.join(" · ")}
+            {/* {detailInfo.verify_info.messages.join(" · ")} */}
           </p>
           <div className="score">
             <svg

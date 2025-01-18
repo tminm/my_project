@@ -14,10 +14,13 @@ const HomeSection: React.FC<IProps> = memo(function HomeSection(props) {
   return (
     <SectionWarpper>
       <SectionHeader
-        title={infoData.title}
-        subtitle={infoData.subtitle}
+        title={infoData.data[0].title}
+        subtitle={infoData.data[0].subtitle}
       ></SectionHeader>
-      <SectionRooms roomList={infoData.list} itemwidth="25%"></SectionRooms>
+      <SectionRooms
+        roomList={infoData.data[0].list}
+        itemwidth="25%"
+      ></SectionRooms>
       <SectionFooter></SectionFooter>
     </SectionWarpper>
   );

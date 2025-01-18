@@ -79,7 +79,7 @@ const RoomItem: React.FC<IProps> = memo(function RoomItem(props) {
           </div>
         )}
 
-        <div className="desc">{itemData.verify_info?.messages.join(" . ")}</div>
+        {/* <div className="desc">{itemData.verify_info?.messages.join(" . ")}</div> */}
         <div className="name">{itemData.name}</div>
         <div className="price">¥{itemData.price}/晚</div>
       </div>

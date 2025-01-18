@@ -20,7 +20,7 @@ const DetailPictures = memo(() => {
     })
   );
 
-  const pictureList = (goodPriceInfo.list as Array<any>).map(
+  const pictureList = (goodPriceInfo.data[0].list as Array<any>).map(
     (item) => item.picture_url
   );
 

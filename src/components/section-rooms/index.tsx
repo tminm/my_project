@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {
-  roomList: any[];
+  roomList: any;
   itemwidth?: string;
 }
 const SectionRooms: React.FC<IProps> = memo(function SectionRooms(props) {
@@ -21,10 +21,19 @@ const SectionRooms: React.FC<IProps> = memo(function SectionRooms(props) {
     },
     [navigate, disPatch]
   );
+  let RoomList;
+  if (roomList[0].homes) {
+    // for (const room of roomList) {
+    //   RoomList = room.homes[0];
+    // }
+    RoomList = roomList[0].homes;
+  } else {
+    RoomList = roomList?.slice(0, 8);
+  }
+
   return (
     <RoomWrapper className="room-list">
-      {roomList?.slice(0, 8).map((item) => {
-        console.log(item);
+      {RoomList.map((item: any) => {
         return (
           <RoomItem
             itemData={item}

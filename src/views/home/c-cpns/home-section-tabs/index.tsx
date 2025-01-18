@@ -15,14 +15,15 @@ interface IProps {
   };
 }
 
-const HomeSectionTabs: React.FC<IProps> = memo(function HomeSectionTabs(props) {
+const HomeSectionTabs: React.FC<any> = memo(function HomeSectionTabs(props) {
   // 从 props 获取数据
   const { infoData } = props;
+  const { dest_list } = infoData.data;
   // 定义内部的 state
-  const initialName = Object.keys(infoData.dest_list)[0];
+  const initialName = infoData.data.dest_list[0].name;
   // useState 的初始化值只在第一次渲染的时候有用
   const [name, setName] = useState(initialName);
-  const tabNames = infoData.dest_address?.map((item: any) => item.name);
+  const tabNames = infoData.data.dest_list?.map((item: any) => item.name);
 
   // 事件处理函数
   const tabClickHandle = useCallback(function (index: number, name: string) {
@@ -32,12 +33,12 @@ const HomeSectionTabs: React.FC<IProps> = memo(function HomeSectionTabs(props) {
   return (
     <SectionTabsWrapper>
       <SectionHeader
-        title={infoData.title}
-        subtitle={infoData.subtitle}
+        title={infoData.data.title}
+        subtitle={infoData.data?.subtitle}
       ></SectionHeader>
       <SectionTabs tabNames={tabNames} tabClick={tabClickHandle}></SectionTabs>
       <SectionRooms
-        roomList={infoData.dest_list?.[name]}
+        roomList={infoData.data.dest_list}
         itemwidth="33.333%"
       ></SectionRooms>
       <SectionFooter name={name}></SectionFooter>
