@@ -1,10 +1,11 @@
 import React, { memo, useMemo, useState } from "react";
 import { InfosWrapper } from "./style";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Booking from "../booking";
 import { DatePicker, InputNumber, Button } from "antd";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { changeConfirmInfoAction } from "store/modules/detail";
 
 const DetailInfos = memo(() => {
   const { detailInfo } = useSelector(
@@ -18,6 +19,7 @@ const DetailInfos = memo(() => {
   const [checkOutDate, setCheckOutDate] = useState<moment.Moment | null>(null);
   const [roomCount, setRoomCount] = useState<number>(1);
   const navigator = useNavigate();
+  const disPatch = useDispatch();
   // 计算总天数
   const totalDays = useMemo(() => {
     if (checkInDate && checkOutDate) {
@@ -43,6 +45,19 @@ const DetailInfos = memo(() => {
       alert("请先选择房间数量！");
     }
 
+    const bookingInfo = {
+      checkInDate: checkInDate.format("YYYY-MM-DD"),
+      checkOutDate: checkOutDate.format("YYYY-MM-DD"),
+      roomCount,
+      totalPrice,
+      pictureUrl: detailInfo.picture_url,
+      price: detailInfo.price,
+      //天数
+      totalDays,
+      name: detailInfo.name,
+    };
+
+    disPatch(changeConfirmInfoAction(bookingInfo));
     navigator("/confirm");
   };
   console.log(detailInfo);

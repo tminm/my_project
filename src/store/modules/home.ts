@@ -1,3 +1,4 @@
+import { use } from "react";
 import {
   getHomeDiscountData,
   getHomeGoodPriceData,
@@ -5,13 +6,15 @@ import {
   getHomeHotRecommendData,
   getHomeLongforData,
   getHomePlusData,
+  postUserInfo,
+  getLoginInfo,
 } from "../../services";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // 使用 async/await 来处理异步请求
 export const fetchHomeDataAction = createAsyncThunk(
   "home/fetchHomeData", // action name
-  async (_, { dispatch }) => {
+  async (_, { dispatch, getState }) => {
     // 获取所有数据
     const goodPriceData = await getHomeGoodPriceData();
     dispatch(changeGoodPriceInfoAction(goodPriceData));
@@ -30,6 +33,13 @@ export const fetchHomeDataAction = createAsyncThunk(
 
     const plusData = await getHomePlusData();
     dispatch(changePlusInfoAction(plusData));
+
+    // const state = getState();
+    // const { username, password } = (
+    //   state as { home: { userInfo: { username: string; password: string } } }
+    // ).home.userInfo;
+    // const userInfo = await getLoginInfo(username, password);
+    // dispatch(changeUserInfoAction(userInfo));
   }
 );
 

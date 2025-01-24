@@ -40,7 +40,11 @@ const Register: React.FC = () => {
               required
             />
           </div>
-          <button type="submit" className="form-button">
+          <button
+            type="submit"
+            className="form-button"
+            style={{ backgroundColor: "#e51d58" }}
+          >
             注册
           </button>
         </form>

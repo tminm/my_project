@@ -38,5 +38,17 @@ export const UserCenterWrapper = styled.div`
       box-shadow: 0 0 10px #ccc;
       padding: 30px;
     }
+
+    .order {
+      display: flex;
+      width: 878px;
+      height: 80px;
+      border-radius: 30px;
+      box-shadow: 0 0 10px #ccc;
+      padding: 30px;
+      span {
+        margin-left: 20px;
+      }
+    }
   }
 `;

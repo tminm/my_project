@@ -1,19 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { changeUserInfoAction } from "store/modules/home";
+import { changeUserInfoAction, fetchHomeDataAction } from "store/modules/home";
 import { useDispatch } from "react-redux";
 import { changeHeaderConfigAction } from "store/modules/main";
+import { getLoginInfo } from "services";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const onLogin = (event: React.FormEvent) => {
+  /**
+   * 处理登录表单的提交
+   * @param {React.FormEvent} event - 事件对象
+   */
+  const onLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("登录表单提交");
-    // 在这里执行登录逻辑
-    dispatch(changeUserInfoAction({ username: "陈俊杰", password: "123456" }));
+    //发送登录请求
+    const result: any = await getLoginInfo(username, password);
+    dispatch(changeUserInfoAction(result.user));
     navigate("/home");
   };
 
@@ -38,6 +45,8 @@ const Login: React.FC = () => {
               type="text"
               name="username"
               placeholder="用户名"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
@@ -47,6 +56,8 @@ const Login: React.FC = () => {
               type="password"
               name="password"
               placeholder="密码"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -60,7 +71,6 @@ const Login: React.FC = () => {
             style={{ backgroundColor: "#e51d58" }}
             type="submit"
             className="form-button"
-            onClick={onLogin}
           >
             登录
           </button>
