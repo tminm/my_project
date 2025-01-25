@@ -7,13 +7,20 @@ const mainSlice = createSlice({
       isFixed: false,
       topAlpha: false,
     },
+    searchInfos: {
+      city: "",
+    },
   },
   reducers: {
     changeHeaderConfigAction(state, { payload }) {
       state.headerConfig = payload;
     },
+    changeSearchInfosAction(state, { payload }) {
+      state.searchInfos = payload;
+    },
   },
 });
 
-export const { changeHeaderConfigAction } = mainSlice.actions;
+export const { changeHeaderConfigAction, changeSearchInfosAction } =
+  mainSlice.actions;
 export default mainSlice.reducer;

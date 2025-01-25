@@ -1,11 +1,7 @@
 import httpInstance from "../request";
 
-export function getEntireRoomList(offset = 0, size = 20) {
+export function getEntireRoomList() {
   return httpInstance.get({
-    url: "entire/list",
-    params: {
-      offset,
-      size,
-    },
+    url: "/entire",
   });
 }

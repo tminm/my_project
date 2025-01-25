@@ -92,14 +92,14 @@ export const fetchRoomListAction = () => {
     dispatch(changeIsLoadingAction(true));
 
     // Fetch the room list
-    const res = (await getEntireRoomList(currentPage * 20)) as any;
+    const res = (await getEntireRoomList()) as any;
 
     // Dispatch loading action false after fetching data
     dispatch(changeIsLoadingAction(false));
 
     // 2. Save the room list and total count in the Redux state
-    const roomList = res.list;
-    const totalCount = res.totalCount;
+    const roomList = res.data;
+    const totalCount = res.data.length;
 
     dispatch(changeRoomListAction(roomList));
     dispatch(changeTotalCountAction(totalCount));

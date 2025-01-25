@@ -20,6 +20,7 @@ export const SectionsWrapper = styled.div`
       flex-direction: column;
       justify-content: center;
       padding: 0 30px;
+      cursor: pointer;
 
       .title {
         font-size: 12px;
@@ -43,4 +44,4 @@ export const SectionsWrapper = styled.div`
       background-color: #eee;
     }
   }
-`
+`;
