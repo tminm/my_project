@@ -1,8 +1,10 @@
 import React, { memo, useState } from "react";
 import { ConfirmWrapper } from "./style";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PaymentPage from "views/PaymentPage";
+import { getOrder, postOrder } from "services/modules/order";
+import { changeOrderInfoAction } from "store/modules/detail";
 
 const confirm = memo((props) => {
   const navigator = useNavigate();
@@ -14,13 +16,23 @@ const confirm = memo((props) => {
   );
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
-  const handleBooking = () => {
+  const disPatch = useDispatch();
+  const handleBooking = async () => {
     setIsProcessing(true);
-    setTimeout(() => {
-      setIsProcessing(false);
-      alert("订单提交成功！");
-      navigator("/userCenter");
-    }, 500);
+    const result = await postOrder({
+      userId: confirmInfo.userId,
+      picture: confirmInfo.pictureUrl,
+      roomName: confirmInfo.name,
+      price: confirmInfo.price * confirmInfo.totalDays + 200,
+      status: "已支付",
+    });
+
+    if ((result as any).sucess === false) {
+      return alert("订单提交失败，请重试！");
+    }
+    setIsProcessing(false);
+    alert("订单提交成功！");
+    navigator("/userCenter");
   };
   return (
     <ConfirmWrapper>

@@ -54,6 +54,10 @@ const HeaderRight = memo(() => {
     console.log("退出登录");
     dispatch(changeUserInfoAction({ username: "", password: "" }));
   }
+
+  const handleRegister = () => {
+    navigate("/register");
+  };
   return (
     <RightWrapper>
       <div className="btns">
@@ -62,7 +66,11 @@ const HeaderRight = memo(() => {
             登录
           </span>
         )}
-        {!userInfo.username && <span className="btn">注册</span>}
+        {!userInfo.username && (
+          <span className="btn" onClick={handleRegister}>
+            注册
+          </span>
+        )}
         <span>
           <IconGlobal></IconGlobal>
         </span>
@@ -85,14 +93,18 @@ const HeaderRight = memo(() => {
                   </>
                 ) : (
                   <>
-                    <div className="item">登录</div>
-                    <div className="item">注册</div>
+                    <div className="item" onClick={() => navigate("/login")}>
+                      登录
+                    </div>
+                    <div className="item" onClick={() => navigate("/register")}>
+                      注册
+                    </div>
                   </>
                 )
               }
             </div>
             <div className="bottom">
-              <div className="item">出租房源</div>
+              {userInfo.role === "host" && <div className="item">出租房源</div>}
               <div className="item">开展体验</div>
               <div className="item">帮助</div>
             </div>

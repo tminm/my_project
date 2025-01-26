@@ -5,6 +5,7 @@ const detailSlice = createSlice({
   initialState: {
     detailInfo: {},
     confirmInfo: {},
+    order: {},
   },
   reducers: {
     changeDetailInfoAction(state, { payload }) {
@@ -13,9 +14,15 @@ const detailSlice = createSlice({
     changeConfirmInfoAction(state, { payload }) {
       state.confirmInfo = payload;
     },
+    changeOrderInfoAction(state, { payload }) {
+      state.order = payload;
+    },
   },
 });
 
-export const { changeDetailInfoAction, changeConfirmInfoAction } =
-  detailSlice.actions;
+export const {
+  changeDetailInfoAction,
+  changeConfirmInfoAction,
+  changeOrderInfoAction,
+} = detailSlice.actions;
 export default detailSlice.reducer;

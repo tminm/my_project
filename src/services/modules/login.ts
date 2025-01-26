@@ -1,8 +1,19 @@
 import httpInstance from "services/request";
 
-export function postUserInfo() {
+interface postInfo {
+  username: string;
+  password: string;
+  hole: string;
+}
+
+export function postUserInfo(username: string, password: string, role: string) {
   return httpInstance.post({
-    url: "/login",
+    url: "/register",
+    data: {
+      username,
+      password,
+      role,
+    },
   });
 }
 

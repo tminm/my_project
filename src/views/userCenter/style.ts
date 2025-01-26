@@ -42,7 +42,7 @@ export const UserCenterWrapper = styled.div`
     .order {
       display: flex;
       width: 878px;
-      height: 80px;
+      height: 107px;
       border-radius: 30px;
       box-shadow: 0 0 10px #ccc;
       padding: 30px;

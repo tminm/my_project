@@ -31,6 +31,10 @@ const UserCenter: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
 const PaymentPage: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
   () => import("../views/PaymentPage/index")
 );
+
+const Asscess: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
+  () => import("../views/assess/assess")
+);
 // 定义路由配置项的类型
 interface RouteConfig {
   path: string; // 路由路径
@@ -78,6 +82,10 @@ const routes: RouteConfig[] = [
   {
     path: "/payment",
     element: <PaymentPage />,
+  },
+  {
+    path: "/asscess",
+    element: <Asscess></Asscess>,
   },
 ];
 

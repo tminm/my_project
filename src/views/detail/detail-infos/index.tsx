@@ -8,9 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { changeConfirmInfoAction } from "store/modules/detail";
 
 const DetailInfos = memo(() => {
-  const { detailInfo } = useSelector(
-    (state: { detail: { detailInfo: any }; home: { goodPriceInfo: any } }) => ({
+  const { detailInfo, userInfo } = useSelector(
+    (state: {
+      detail: { detailInfo: any };
+      home: { goodPriceInfo: any; userInfo: any };
+    }) => ({
       detailInfo: state.detail.detailInfo,
+      userInfo: state.home.userInfo,
     })
   );
 
@@ -55,6 +59,7 @@ const DetailInfos = memo(() => {
       //天数
       totalDays,
       name: detailInfo.name,
+      userId: userInfo.id,
     };
 
     disPatch(changeConfirmInfoAction(bookingInfo));
