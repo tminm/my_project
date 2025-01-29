@@ -35,6 +35,18 @@ const PaymentPage: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
 const Asscess: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
   () => import("../views/assess/assess")
 );
+
+const Room: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
+  () => import("../views/room/room")
+);
+
+const Experience: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
+  () => import("../views/experience/index")
+);
+
+const Chat: LazyExoticComponent<React.ComponentType<any>> = React.lazy(
+  () => import("../components/AIChat/ChatWidget")
+);
 // 定义路由配置项的类型
 interface RouteConfig {
   path: string; // 路由路径
@@ -86,6 +98,18 @@ const routes: RouteConfig[] = [
   {
     path: "/asscess",
     element: <Asscess></Asscess>,
+  },
+  {
+    path: "/room",
+    element: <Room></Room>,
+  },
+  {
+    path: "/experience",
+    element: <Experience></Experience>,
+  },
+  {
+    path: "/chat",
+    element: <Chat></Chat>,
   },
 ];
 

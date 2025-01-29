@@ -1,7 +1,7 @@
 import React, { memo } from "react";
-import { BrowserRouter as Router, useLocation } from "react-router-dom"; // 引入 Router
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import { useRoutes } from "react-router-dom";
-import routes from "./router"; // 路由配置
+import routes from "./router";
 import AppHeader from "./components/app-header";
 import AppFooter from "./components/app-footer";
 import useScrollTop from "./hooks/useScrollTop";
@@ -11,14 +11,18 @@ const App = memo(() => {
   useScrollTop();
   const location = useLocation();
 
-  // 判断是否是登录页面
   const isLoginPage =
     location.pathname === "/login" || location.pathname === "/register";
+
   return (
     <div className="app">
-      {/* <AppHeader /> */}
+      {/* 全局导航栏 */}
       {!isLoginPage && <AppHeader />}
+
+      {/* 页面内容 */}
       <div className="page">{useRoutes(routes)}</div>
+
+      {/* 全局页脚 */}
       {!isLoginPage && <AppFooter />}
     </div>
   );

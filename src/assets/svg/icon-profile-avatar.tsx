@@ -2,9 +2,13 @@ import React, { memo } from "react";
 import { useSelector } from "react-redux";
 
 const IconProfileAvatar = memo(() => {
-  const { userInfo } = useSelector((state: any) => ({
+  let { userInfo } = useSelector((state: any) => ({
     userInfo: state.home.userInfo, // 根据实际 Redux 状态修改路径
   }));
+
+  if (!userInfo.id && userInfo.username !== "") {
+    userInfo = JSON.parse(localStorage.getItem("user") || "{}");
+  }
 
   // 随机生成背景颜色
   const getRandomColor = () => {
@@ -23,7 +27,7 @@ const IconProfileAvatar = memo(() => {
         width: "32px",
         height: "32px",
         borderRadius: "50%",
-        backgroundColor: getRandomColor(),
+        backgroundColor: "#1890ff",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

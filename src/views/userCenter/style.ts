@@ -50,5 +50,11 @@ export const UserCenterWrapper = styled.div`
         margin-left: 20px;
       }
     }
+
+    .btn {
+      width: 92px;
+      height: 42px;
+      cursor: pointer;
+    }
   }
 `;

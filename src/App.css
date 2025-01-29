@@ -12,3 +12,8 @@ html {
   width: 100%;
   height: 100%;
 }
+
+.app {
+  position: relative; /* 创建定位上下文 */
+  min-height: 100vh;
+}

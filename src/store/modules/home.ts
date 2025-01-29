@@ -6,8 +6,6 @@ import {
   getHomeHotRecommendData,
   getHomeLongforData,
   getHomePlusData,
-  postUserInfo,
-  getLoginInfo,
 } from "../../services";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -53,6 +51,7 @@ const homeSlice = createSlice({
     longforInfo: {},
     plusInfo: {},
     userInfo: {},
+    roomInfo: {},
   },
   reducers: {
     changeGoodPriceInfoAction(state, { payload }) {
@@ -76,6 +75,9 @@ const homeSlice = createSlice({
     changeUserInfoAction(state, { payload }) {
       state.userInfo = payload;
     },
+    changeRoomInfoAction(state, { payload }) {
+      state.roomInfo = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchHomeDataAction.fulfilled, (state) => {
@@ -93,6 +95,7 @@ export const {
   changeLongForInfoAction,
   changePlusInfoAction,
   changeUserInfoAction,
+  changeRoomInfoAction,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

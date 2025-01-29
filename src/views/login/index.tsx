@@ -21,6 +21,7 @@ const Login: React.FC = () => {
     //发送登录请求
     const result: any = await getLoginInfo(username, password);
     dispatch(changeUserInfoAction(result.user));
+    localStorage.setItem("user", JSON.stringify(result.user));
     navigate("/home");
   };
 
