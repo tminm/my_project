@@ -59,6 +59,7 @@ const HeaderRight = memo(() => {
     e.stopPropagation();
     dispatch(changeUserInfoAction({ username: "", password: "" }));
     localStorage.removeItem("user");
+    navigate("/home");
   }
 
   const handleRegister = () => {
@@ -136,7 +137,7 @@ const HeaderRight = memo(() => {
                   navigate("/experience");
                 }}
               >
-                互动区
+                交流互动区
               </div>
               <div
                 className="item"

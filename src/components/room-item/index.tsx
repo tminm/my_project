@@ -1,4 +1,4 @@
-import React, { memo, useRef } from "react";
+import React, { memo, useRef, useState } from "react";
 import { Carousel, Rate } from "antd";
 import IconArrowLeft from "../../assets/svg/icon-arrow-left";
 import IconArrowRight from "../../assets/svg/icon-arrow-right";

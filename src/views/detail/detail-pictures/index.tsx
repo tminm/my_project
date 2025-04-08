@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { PicturesWrapper } from "./style";
 import { useSelector } from "react-redux";
 import PictureBrowser from "../../../base-ui/picture-browser";
@@ -11,18 +11,34 @@ interface IDetailInfo {
 const DetailPictures = memo(() => {
   // 定义内部状态
   const [showBrowser, setShowBrowser] = useState(false);
-
   // 使用 useSelector 获取 detailInfo，并为它指定类型
-  const { detailInfo, goodPriceInfo } = useSelector(
+  let { detailInfo, goodPriceInfo } = useSelector(
     (state: { detail: { detailInfo: any }; home: { goodPriceInfo: any } }) => ({
       detailInfo: state.detail.detailInfo,
       goodPriceInfo: state.home.goodPriceInfo,
     })
   );
+  let pictureList: string[];
+  if (!goodPriceInfo.data) {
+    //从localStorage中获取pictureList
+    pictureList = JSON.parse(localStorage.getItem("pictureList") || "[]");
+  } else {
+    pictureList = (goodPriceInfo.data[0].list as Array<any>).map(
+      (item) => item.picture_url
+    );
+  }
 
-  const pictureList = (goodPriceInfo.data[0].list as Array<any>).map(
-    (item) => item.picture_url
-  );
+  if (Object.keys(detailInfo).length === 0) {
+    detailInfo = JSON.parse(localStorage.getItem("detailInfo") || "{}");
+  }
+
+  useEffect(() => {
+    localStorage.setItem("pictureList", JSON.stringify(pictureList));
+    localStorage.setItem("detailInfo", JSON.stringify(detailInfo));
+  }, []);
+
+  //将picture_urls数组的每一个元素位置随机打乱
+  pictureList.sort(() => Math.random() - 0.5);
 
   return (
     <PicturesWrapper>
@@ -68,12 +84,14 @@ const DetailPictures = memo(() => {
               })}
         </div>
       </div>
-      <div className="show-btn" onClick={() => setShowBrowser(true)}>
+      {/* <div className="show-btn" onClick={() => setShowBrowser(true)}>
         显示图片
-      </div>
+      </div> */}
       {showBrowser && (
         <PictureBrowser
-          pictureUrls={detailInfo.picture_urls}
+          pictureUrls={
+            detailInfo.picture_urls ? detailInfo.picture_urls : pictureList
+          }
           closeclick={() => setShowBrowser(false)}
         ></PictureBrowser>
       )}

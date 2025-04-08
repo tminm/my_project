@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { InfosWrapper } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import Booking from "../booking";
@@ -6,9 +6,10 @@ import { DatePicker, InputNumber, Button } from "antd";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { changeConfirmInfoAction } from "store/modules/detail";
+import { DynamicPricing } from "utils/DynamicPricing";
 
 const DetailInfos = memo(() => {
-  const { detailInfo, userInfo } = useSelector(
+  let { detailInfo, userInfo } = useSelector(
     (state: {
       detail: { detailInfo: any };
       home: { goodPriceInfo: any; userInfo: any };
@@ -18,10 +19,16 @@ const DetailInfos = memo(() => {
     })
   );
 
+  if (Object.keys(detailInfo).length === 0) {
+    detailInfo = JSON.parse(localStorage.getItem("detailInfo") || "{}");
+  }
+
   // 使用React状态管理用户选择的日期和房间数量
   const [checkInDate, setCheckInDate] = useState<moment.Moment | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<moment.Moment | null>(null);
   const [roomCount, setRoomCount] = useState<number>(1);
+  const [demandLevel, setDemandLevel] = useState(100); // 假设需求水平初始为50
+  const [price, setPrice] = useState(detailInfo.price); // 初始化每晚价格为基础价格
   const navigator = useNavigate();
   const disPatch = useDispatch();
   // 计算总天数
@@ -32,23 +39,72 @@ const DetailInfos = memo(() => {
     return 0;
   }, [checkInDate, checkOutDate]);
 
+  // // 计算总价
+  // const totalPrice = useMemo(() => {
+  //   const nightlyPrice = price || 0; // 从 `detailInfo` 获取每晚价格
+  //   return totalDays * nightlyPrice * roomCount;
+  // }, [totalDays, roomCount, detailInfo.price]);
+
+  // 动态定价计算
+  const dynamicPricing = useMemo(
+    () => new DynamicPricing(detailInfo.price),
+    [detailInfo.price]
+  );
+  // 动态计算每晚价格，逐日计算价格
+  const nightlyPrice = useMemo(() => {
+    if (!checkInDate || !checkOutDate) {
+      return price; // 如果没有选择日期，返回 0
+    }
+
+    let totalPrice = 0;
+    let currentDate = checkInDate.clone();
+    const totalDays = checkOutDate.diff(checkInDate, "days");
+    const startTime = {
+      month: checkInDate.month(),
+      day: checkInDate.day(),
+    };
+    const endTiem = {
+      month: checkOutDate.month(),
+      day: checkOutDate.day(),
+    };
+    // 循环每一天，逐日计算价格并累加
+    for (let i = 0; i < totalDays; i++) {
+      const currentDayPrice = dynamicPricing.calculateNightlyPrice(
+        startTime,
+        endTiem,
+        demandLevel
+      );
+      totalPrice += currentDayPrice;
+      currentDate.add(1, "days"); // 增加一天
+    }
+
+    return totalPrice / totalDays; // 返回计算后的每晚平均价格
+  }, [checkInDate, checkOutDate, demandLevel, dynamicPricing]);
+
   // 计算总价
   const totalPrice = useMemo(() => {
-    const nightlyPrice = detailInfo.price || 0; // 从 `detailInfo` 获取每晚价格
-    return totalDays * nightlyPrice * roomCount;
-  }, [totalDays, roomCount, detailInfo.price]);
+    return nightlyPrice * totalDays * roomCount;
+  }, [totalDays, roomCount, nightlyPrice]);
+
+  useEffect(() => {
+    //localstorage存储
+    localStorage.setItem("detailInfo", JSON.stringify(detailInfo));
+  }, []);
 
   // 提交预订的事件处理函数
   const handleBooking = () => {
+    if (!userInfo.id) {
+      alert("您还未登录无法进行下单操作，请先登录！");
+      navigator("/login");
+      return;
+    }
     if (!checkInDate || !checkOutDate) {
       alert("请先选择入住和退房时间！");
       return;
     }
-
     if (!roomCount) {
       alert("请先选择房间数量！");
     }
-
     const bookingInfo = {
       checkInDate: checkInDate.format("YYYY-MM-DD"),
       checkOutDate: checkOutDate.format("YYYY-MM-DD"),
@@ -61,11 +117,9 @@ const DetailInfos = memo(() => {
       name: detailInfo.name,
       userId: userInfo.id,
     };
-
     disPatch(changeConfirmInfoAction(bookingInfo));
     navigator("/confirm");
   };
-  console.log(detailInfo);
   return (
     <InfosWrapper>
       <div className="infos">
@@ -167,7 +221,7 @@ const DetailInfos = memo(() => {
         <div className="booking">
           <div className="booking-wrapper">
             <h3>
-              {detailInfo.price_format}
+              {"¥" + nightlyPrice.toFixed(2)}
               {" /晚"}
             </h3>
             <div style={{ marginBottom: "16px" }}>
@@ -213,7 +267,7 @@ const DetailInfos = memo(() => {
             </button>
             <div style={{ marginBottom: "16px" }}>
               <p>总天数：{totalDays} 晚</p>
-              <p>总费用：{totalPrice} 元</p>
+              <p>总费用：{totalPrice.toFixed(2)} 元</p>
               <p style={{ color: "gray" }}>您现在不会被收费</p>
             </div>
           </div>

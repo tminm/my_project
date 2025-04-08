@@ -19,8 +19,15 @@ const confirm = memo((props) => {
   const disPatch = useDispatch();
   const handleBooking = async () => {
     setIsProcessing(true);
+    let userId;
+    if (localStorage.getItem("user") != null) {
+      userId = JSON.parse(localStorage.getItem("user") as string).id;
+    } else if (confirmInfo.userId == null) {
+      alert("请先登录！");
+      return;
+    }
     const result = await postOrder({
-      userId: confirmInfo.userId,
+      userId: confirmInfo.userId || userId,
       picture: confirmInfo.pictureUrl,
       roomName: confirmInfo.name,
       price: confirmInfo.price * confirmInfo.totalDays + 200,

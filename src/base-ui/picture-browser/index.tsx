@@ -44,12 +44,12 @@ const PictureBrowser: React.FC<IProps> = memo((props) => {
       </div>
       <div className="slider">
         <div className="control">
-          <div className="btn left" onClick={(e) => controlClickHandle(false)}>
+          {/* <div className="btn left" onClick={(e) => controlClickHandle(false)}>
             <IconArrowLeft width="77" height="77"></IconArrowLeft>
-          </div>
-          <div className="btn right" onClick={(e) => controlClickHandle(true)}>
+          </div> */}
+          {/* <div className="btn right" onClick={(e) => controlClickHandle(true)}>
             <IconArrowRight width="77" height="77"></IconArrowRight>
-          </div>
+          </div> */}
         </div>
         <div className="picture">
           <SwitchTransition mode="in-out">

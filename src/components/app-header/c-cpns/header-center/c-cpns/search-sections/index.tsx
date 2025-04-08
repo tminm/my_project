@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { changeSearchInfosAction } from "store/modules/main";
 import { useNavigate } from "react-router-dom";
 
-// 假设你有城市数据
+// 模拟搜索城市数据
 const cities = ["北京", "上海", "广州", "深圳", "杭州", "佛山", "南京", "武汉"];
 
 interface SearchInfo {
@@ -82,7 +82,7 @@ const SearchSections: React.FC<SearchSectionsProps> = memo(
             <>
               <Space>
                 <Select
-                  defaultValue="佛山" // 确保这里的值与 options 中的 value 匹配
+                  defaultValue="北京"
                   style={{ width: 180, marginLeft: 50, marginTop: 10 }}
                   onChange={handleCityChange}
                   options={cities.map((city) => ({
@@ -101,20 +101,22 @@ const SearchSections: React.FC<SearchSectionsProps> = memo(
     const handleTabClick = (tab: string) => {
       setSelectedTab(tab); // 设置当前选中的 tab
       setIsModalVisible(true); // 显示弹出框
-      if (modalRef.current) {
-        if (tab === "入住退房日期") {
-          modalRef.current.style.marginLeft = "483px";
-          modalRef.current.style.height = "200px";
-        } else {
-          modalRef.current.style.marginLeft = "70px";
-          modalRef.current.style.height = "119px";
+      setTimeout(() => {
+        if (modalRef.current) {
+          if (tab === "入住退房日期") {
+            (modalRef.current as any).style.marginLeft = "483px";
+            modalRef.current.style.height = "200px";
+          } else {
+            modalRef.current.style.marginLeft = "70px";
+            modalRef.current.style.height = "119px";
+          }
         }
-      }
+      }, 0);
     };
 
     const handleCityChange = (value: string) => {
       setSelectedCity(value); // 更新城市选择
-      setIsModalVisible(false);
+      // setIsModalVisible(false);
       dispatch(
         changeSearchInfosAction({
           title: value,

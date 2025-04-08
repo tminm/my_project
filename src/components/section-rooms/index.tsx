@@ -23,9 +23,6 @@ const SectionRooms: React.FC<IProps> = memo(function SectionRooms(props) {
   );
   let RoomList;
   if (roomList[0].homes) {
-    // for (const room of roomList) {
-    //   RoomList = room.homes[0];
-    // }
     RoomList = roomList[0].homes;
   } else {
     RoomList = roomList?.slice(0, 8);

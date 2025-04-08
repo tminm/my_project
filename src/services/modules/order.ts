@@ -23,3 +23,21 @@ export function getOrder(userId: number) {
     },
   });
 }
+
+export function cancelOrder(orderId: number) {
+  return httpInstance.post({
+    url: "/order/cancel",
+    data: {
+      orderId,
+    },
+  });
+}
+
+export function deleteRoom(orderId: number) {
+  return httpInstance.post({
+    url: "/home/deleteRoom",
+    data: {
+      orderId,
+    },
+  });
+}

@@ -11,6 +11,7 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [RememberMe, setRememberMe] = useState(false);
 
   /**
    * 处理登录表单的提交
@@ -18,10 +19,23 @@ const Login: React.FC = () => {
    */
   const onLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!username || !password) {
+      alert("请检查用户名和密码是否填写完整");
+      return;
+    }
     //发送登录请求
     const result: any = await getLoginInfo(username, password);
+    if (result.code === -1) {
+      alert("密码错误，请重试");
+      navigate("/login");
+      setPassword("");
+      return;
+    }
+
     dispatch(changeUserInfoAction(result.user));
     localStorage.setItem("user", JSON.stringify(result.user));
+    if (RememberMe) {
+    }
     navigate("/home");
   };
 
@@ -62,11 +76,11 @@ const Login: React.FC = () => {
               required
             />
           </div>
-          <div className="form-options">
+          <div className="form-options" style={{ marginLeft: "324px" }}>
             <label>
               <input type="checkbox" /> 记住我
             </label>
-            <a href="/">忘记密码?</a>
+            {/* <a href="/">忘记密码?</a> */}
           </div>
           <button
             style={{ backgroundColor: "#e51d58" }}

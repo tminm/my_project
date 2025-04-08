@@ -52,6 +52,8 @@ const homeSlice = createSlice({
     plusInfo: {},
     userInfo: {},
     roomInfo: {},
+    //智能推荐
+    recommendInfo2: {},
   },
   reducers: {
     changeGoodPriceInfoAction(state, { payload }) {
@@ -78,6 +80,9 @@ const homeSlice = createSlice({
     changeRoomInfoAction(state, { payload }) {
       state.roomInfo = payload;
     },
+    changeRecommendInfo2Action(state, { payload }) {
+      state.recommendInfo2 = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchHomeDataAction.fulfilled, (state) => {
@@ -96,6 +101,7 @@ export const {
   changePlusInfoAction,
   changeUserInfoAction,
   changeRoomInfoAction,
+  changeRecommendInfo2Action,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

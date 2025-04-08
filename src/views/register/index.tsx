@@ -14,24 +14,23 @@ const Register: React.FC = () => {
   // 处理表单提交
   const onRegister = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    if (!username || !password || !confirmPassword) {
+      alert("请检查用户名、密码和确认密码是否填写完整");
+      return;
+    }
     // 确认密码是否匹配
     if (password !== confirmPassword) {
       alert("密码和确认密码不一致");
       return;
     }
     try {
-      // 假设你的后端接口是 /api/register，使用 POST 方法发送数据
       const response = await postUserInfo(username, password, role);
       if ((response as any).status === "success") {
         nav("/login");
       } else {
-        // console.error("注册失败", result);
-        // alert(result.message || "注册失败，请重试");
         alert("注册失败，请重试");
       }
     } catch (error) {
-      console.error("请求失败", error);
       alert("注册请求失败，请稍后再试");
     }
   };
@@ -116,8 +115,15 @@ const Register: React.FC = () => {
         </form>
         <div className="form-footer">
           已有账户？{" "}
-          <a href="/login" className="form-link">
+          <a className="form-link" onClick={() => nav("/login")}>
             立即登录
+          </a>
+          <a
+            className="form-link"
+            style={{ marginLeft: "229px" }}
+            onClick={() => nav("/home")}
+          >
+            返回首页
           </a>
         </div>
       </div>

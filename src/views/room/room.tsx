@@ -7,6 +7,7 @@ import { insertRoom, uploadFile } from "services/modules/upload";
 import TextArea from "antd/es/input/TextArea";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import moment from "moment";
 
 interface PictureProps {
   onFileUpload: (url: string) => void;
@@ -28,11 +29,15 @@ const Room = memo(() => {
 
   const nav = useNavigate();
 
-  const { userInfo } = useSelector(
+  let { userInfo } = useSelector(
     (state: { home: { goodPriceInfo: any; userInfo: any } }) => ({
       userInfo: state.home.userInfo,
     })
   );
+
+  if (userInfo.id == null) {
+    userInfo = JSON.parse(localStorage.getItem("user") || "{}");
+  }
 
   // 表单状态
   const [city, setCity] = useState("");
@@ -53,7 +58,6 @@ const Room = memo(() => {
     });
   const handleOK = async () => {
     const url = imgUrl[0];
-
     const res = await insertRoom({
       host_id: userInfo.id,
       name,
@@ -120,11 +124,6 @@ const Room = memo(() => {
         formData.append("file", file); // 将文件添加到 FormData
         const response = await uploadFile(formData);
         const url = (response as any).url;
-        // 上传成功后，将文件的 URL 传递给父组件
-        // if (onSuccess) {
-        //   onSuccess(response, file);
-        // }
-        // 调用父组件传递的回调函数，将文件的 URL 传递给父组件
         if (props.onFileUpload) {
           props.onFileUpload(url);
         }
@@ -174,10 +173,6 @@ const Room = memo(() => {
       <div className="room">
         <div className="container">
           <h3>发布房源</h3>
-          <h4>请上传真实的房源图片</h4>
-          <div className="uploadImage">
-            <Picture onFileUpload={onFileUpload}></Picture>
-          </div>
           <div>
             <h4>请选择城市</h4>
             <Select
@@ -196,7 +191,7 @@ const Room = memo(() => {
             />
           </div>
           <div>
-            <h4>请输入房源价格</h4>
+            <h4>请输入房源价格（单位：元/晚）</h4>
             <Input
               style={{ width: 500 }}
               placeholder="房源价格"
@@ -206,15 +201,31 @@ const Room = memo(() => {
           </div>
           <div>
             <h4>出租日期</h4>
-            <DatePicker style={{ width: 500 }} onChange={handleDate} />
+            <DatePicker
+              style={{ width: 500 }}
+              disabledDate={(current) =>
+                current && current < moment().startOf("day")
+              }
+              onChange={handleDate}
+            />
           </div>
           <div>
             <h4>截止日期</h4>
-            <DatePicker style={{ width: 500 }} onChange={handleDate2} />
+            <DatePicker
+              style={{ width: 500 }}
+              disabledDate={(current) =>
+                current && current < moment().startOf("day")
+              }
+              onChange={handleDate2}
+            />
           </div>
           <div>
             <h4>请输入房源描述</h4>
             <TextArea style={{ height: 132 }} onChange={handleDes}></TextArea>
+          </div>
+          <h4>请上传真实的房源图片</h4>
+          <div className="uploadImage">
+            <Picture onFileUpload={onFileUpload}></Picture>
           </div>
           <div className="button">
             <button onClick={handleOK}>发布</button>

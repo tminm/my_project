@@ -26,3 +26,14 @@ export function getLoginInfo(username: string, password: string) {
     },
   });
 }
+
+export function changePasswordApi(data: {
+  id: number;
+  username: string;
+  password: string;
+}) {
+  return httpInstance.post({
+    url: "/changePassword",
+    data,
+  });
+}

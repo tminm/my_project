@@ -35,3 +35,11 @@ export function getHomePlusData() {
     url: "/home/plus",
   });
 }
+
+//获取历史订单数据
+export function getHistoryData(userId: number) {
+  return httpInstance.post({
+    url: "/home/history",
+    data: { userId },
+  });
+}
